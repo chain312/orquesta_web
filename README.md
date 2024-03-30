@@ -8,6 +8,45 @@
 docker-compose up -d
 ```
 打开浏览器，访问localhost:5000，应该能看到一个YAML编辑器。将喜欢的Orquesta工作流定义粘贴到编辑器中，稍等一两秒钟，就会出现如上图的效果。
+这有一个yaml文件，供你测试这个服务是否正常运行
+
+```yaml
+version: 1.0
+
+description: A basic sequential workflow.
+
+input:
+  - name
+
+vars:
+  - greeting: null
+
+output:
+  - greeting: <% ctx().greeting %>
+
+tasks:
+  task1:
+    action: core.echo message=<% ctx().name %>
+    next:
+      - when: <% succeeded() %>
+        publish: greeting=<% result().stdout %>
+        do: task2
+  task2:
+    action: core.echo
+    input:
+      message: "All your base are belong to us!"
+    next:
+      - when: <% succeeded() %>
+        publish:
+          - greeting: <% ctx("greeting") %>, <% result().stdout %>
+        do:
+          - task3
+  task3:
+    action: core.echo message=<% ctx('greeting') %>
+    next:
+      - when: <% succeeded() %>
+        publish: greeting=<% result().stdout %>
+```
 ### 概述
 orquesta_web是一个轻量级的Flask应用程序，可以帮助您开发Orquesta工作流。通过审查由YAML定义组成的有向图，可以对工作流进行检查。这种紧密的反馈循环可以帮助减少工作流开发时间，并且分享工作流的高级流程图可以帮助其他人，快速建立对工作流实例基本逻辑理解。
 
