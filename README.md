@@ -5,6 +5,8 @@
 ### 快速开始
 进入到这个项目的目录中
 ```
+git clone --recursive  https://github.com/chain312/orquesta_web.git
+cd orquesta_web
 docker-compose up -d
 ```
 打开浏览器，访问localhost:5000，应该能看到一个YAML编辑器。将喜欢的Orquesta工作流定义粘贴到编辑器中，稍等一两秒钟，就会出现如上图的效果。
