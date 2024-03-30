@@ -6,7 +6,7 @@ services:
     image: trstruth/rehearsal:latest
     container_name: rehearsal
     ports:
-     - "5000:5000"
+     - "58888:5000"
     volumes:
       - ./image/orquesta:/orquesta
       - ./image/web/src:/web/src
